@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>prototype test</title>
+    <script>
+    //繼承, 通過原型鏈實現
+    
+    function Box(){         //被繼承的函數叫做超類型 (父類, 基類)
+        this.name = 'Lee';
+    }
+    
+    function Desk(){        //繼承的函數叫做子類型 (子類, 派生纇)
+        this.age = 100;
+    }
+    
+    function Table(){
+        this.level = 'Gold';
+    }
+    
+    //通過原型鏈繼承, 超類型(父類) 實例化後的對象實例, 賦值給 "子類型的原型對象" 即可 (賦值給子類型的原型 屬性)
+    Desk.prototype = new Box();
+    Table.prototype = new Desk();
+
+    var desk = new Desk();
+    //alert(desk.name);
+    
+    var table = new Table();
+    //console.log(table);
+    
+    Box.prototype.name = 'Terry';
+    console.log(desk.name);     //就近原則, 函數裡面有(這邊指的是: function Box(){...}), 就返回, 沒有就去查找原型.
+    
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

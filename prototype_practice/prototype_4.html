@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>prototype</title>
+    <script>
+    /*
+    1.原型鏈繼承
+    2.借用構造函數繼承(對象冒充繼承)
+    3.組合繼承(結合前兩種)
+    4.原型式繼承
+    */
+    /*
+    function obj(o){        //表示將要傳遞進去的對象
+        function F (){}     //F構造是一個臨時新建的對象, 用來存傳遞過來的對象
+        F.prototype = o;    //將o 對象實例賦值給F構造的原型對象
+        return new F();     //最後返回這個得到傳遞過來對象的對象實例
+    }
+    
+    //F.prototype = o 其實就相當於 Desk.prototype = new Box();
+    
+    //相當於 box = new Box();
+    var box = {
+        name : 'Terry',
+        age : 100,
+        arr : [1,2,3]
+    };
+    var box1 = obj(box);
+    //alert(box1.name);
+    box1.arr.push(4);
+    //alert(box1.arr);
+    
+    var box2 = obj(box);
+    //alert(box2.arr);        //引用類型的屬性共享了
+    */
+    
+    //5.寄生式繼承 = 原型式 + 工廠模式
+    /*
+    //臨時中轉函數
+    function obj(o){        
+        function F (){}     
+        F.prototype = o;    
+        return new F();     
+    }
+    //寄生函數
+    function create(o){
+        var f = obj(o);
+        f.run = function(){
+            return this.name + ' method';
+        };
+        return f ;
+    }
+    
+    
+    var box = {
+        name : 'Terry',
+        age : 100,
+        arr : [1,2,3]
+    };
+    var box1 = create(box);
+    //alert(box1.name);
+    alert(box1.run());
+    */
+    //6.寄生組合繼承
+    //臨時中轉函數
+    function obj(o){        
+        function F (){}     
+        F.prototype = o;    
+        return new F();     
+    }
+    //寄生函數
+    function create(box, desk){
+        var f = obj(box.prototype);     //修改
+        f.constructor = desk;
+        desk.prototype = f;
+    }
+    
+    function Box(name, age){
+        this.name = name;
+        this.age = age;
+    }
+    Box.prototype.run = function(){     //方法寫在原型
+        return this.name + ', ' + this.age + ' runing...';
+    };
+    function Desk(name, age){
+        Box.call(this, name, age);      //對象冒充
+    }
+    
+    //通過寄生組合繼承來實現繼承
+    create(Box, Desk);                  //這句話用來替代Desk.prototype = new Box();
+    
+    var desk = new Desk('Lee',100);
+    //alert(desk.run());
+    alert(desk.constructor);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
