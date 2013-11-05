@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>數碼時鐘</title>
+    <script>
+    function toDou(n)
+    {
+        if(n<10)
+        {
+            return '0'+n;
+        }
+        else
+        {
+            return ''+n;
+        }
+    }
+    window.onload = function()
+    {
+        var aImg = document.getElementsByTagName('img');
+        function tick(){
+            //var str = '012321';
+            var oDate = new Date();
+            
+            var str = toDou(oDate.getHours()) + toDou(oDate.getMinutes()) + toDou(oDate.getSeconds());
+            //alert(str);
+            for( var i=0; i<aImg.length; i++ )
+            {
+                aImg[i].src = 'images/' + str.charAt(i) + '.png'
+            }
+        }
+        setInterval(tick, 1000);
+        tick();
+    };
+    /*
+        讓它自己可以動起來
+        
+        但為何一開始全0的!?
+        定時器有個特性, 因為定時器剛被打開的時候, 並不會執行, 他要等到過1秒鐘(or 你所設置的時間)之後才會執行
+    */
+    /*
+        效果思路
+        獲取系統時間
+            Date對象
+            getHours, getMinutes, getSeconds
+        顯示系統時間
+            字符串連接
+            空位補零
+        設置圖片路徑
+            str[0]  //IE7不兼容
+            改為使用charAt
+            str.charAt(0);
+    */
+    </script>
+</head>
+<body style="background:black; font-size:50px; color:white; ">
+<img src="images/0.png" />
+<img src="images/0.png" />
+:
+<img src="images/0.png" />
+<img src="images/0.png" />
+:
+<img src="images/0.png" />
+<img src="images/0.png" />
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>年歷</title>
+<style>
+.text>h2, ul{ margin:0; padding:0; }
+#tab{ width:300px; height:600px; background:#999; margin:0 auto; }
+#tab ul li{ float:left; list-style:none; width:98px; text-align:center; background:rgba(0,0,0,.7); border:1px solid red; cursor:pointer; color:yellow; }
+#tab ul li.active{ background:green; color:red; }
+</style>
+<script>
+window.onload=function()
+{
+    var oDiv = document.getElementById('tab');
+    var aLi = oDiv.getElementsByTagName('li');
+    var oTxt = oDiv.getElementsByTagName('div')[0];
+    
+    for(var i=0; i<aLi.length; i++)
+    {
+        aLi[i].index = i;
+        aLi[i].onmouseover=function()
+        {
+            for(var i=0; i<aLi.length; i++)
+            {
+                aLi[i].className = '';
+            }
+            this.className = 'active';
+            oTxt.innerHTML = '<h2>' + (this.index+1) + ' 月活動!</h2><p>簡易年曆test</p>';
+        };
+    }
+}
+/*
+    字符串連接
+    alert('abc'+12+5+'def');
+    
+    'abc'+12+5+'def'
+    'abc12'+5+'def'
+    'abc152'+'def'
+    'abc152def'
+    'abc'+(12+5)+'def'
+    
+    innerHTML: 設置標籤裡面的文字
+    
+    abc.value
+    abc['value']: 括號裡面可用變數來替換
+    
+    arr = [1,2,3]
+    arr[0]
+    
+    函數傳參, 參數就是一個佔位符
+    
+    for迴圈
+    ex: 全選反選
+    
+    選項卡
+        this的使用
+        先清空所有的按鈕, 在選中當前按鈕
+        js添加index
+*/
+</script>
+</head>
+<body>
+    <div id="tab" class="calendar">
+        <ul>
+            <li class="active">
+                <h2>1</h2>
+                <p>JAN</p>
+            </li>
+            <li>
+                <h2>2</h2>
+                <p>FER</p>
+            </li>
+            <li>
+                <h2>3</h2>
+                <p>MAR</p>
+            </li>
+            <li>
+                <h2>4</h2>
+                <p>APR</p>
+            </li>
+            <li>
+                <h2>5</h2>
+                <p>MAY</p>
+            </li>
+            <li>
+                <h2>6</h2>
+                <p>JUN</p>
+            </li>
+            <li>
+                <h2>7</h2>
+                <p>JUL</p>
+            </li>
+            <li>
+                <h2>8</h2>
+                <p>AUG</p>
+            </li>
+            <li>
+                <h2>9</h2>
+                <p>SEP</p>
+            </li>
+            <li>
+                <h2>10</h2>
+                <p>OCT</p>
+            </li>
+            <li>
+                <h2>11</h2>
+                <p>NOV</p>
+            </li>
+            <li>
+                <h2>12</h2>
+                <p>DEC</p>
+            </li>
+        </ul>
+        
+        <div class="text">
+            <h2>1 月活動!</h2>
+            <p>簡易年曆test</p>
+        </div>
+    </div>
+</body>
+</html>

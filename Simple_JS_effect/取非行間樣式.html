@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>取非行間樣式</title>
+    <style>
+    #div1{ width:200px; height:200px; background:red; }
+    </style>
+    <script>
+    function getStyle(obj, name)    //建立一個公共函數, 以後要用直接調用即可
+    {
+        if(obj.currentStyle)
+        {
+            return obj.currentStyle[name];
+        }
+        else
+        {
+            return getComputedStyle(obj, false)[name];
+        }
+    }
+    window.onload=function()
+    {
+        var oDiv = document.getElementById('div1');
+        //alert(oDiv.style.width);
+        //IE7
+        //alert(oDiv.currentStyle.width);
+        
+        //Chrome, FF, IE9
+        //alert(getComputedStyle(oDiv, '隨便傳啥都行').width);
+        //alert(getComputedStyle(oDiv, false).width);
+        //如何兼容?
+        /*
+        if(oDiv.currentStyle)
+        {
+            //IE
+            alert(oDiv.currentStyle.width);
+        }
+        else
+        {
+            //FF
+            alert(getComputedStyle(oDiv, false).width);
+        }*/
+        alert(getStyle(oDiv, 'backgroundColor'));
+    }
+    //currentStyle 只能取單一樣式, 無法取複合樣式
+    /*
+    複合樣式: background, border
+    單一樣式: width, height, position
+    */
+    </script>
+</head>
+<body>
+<div id="div1"></div>
+</body>
+</html>

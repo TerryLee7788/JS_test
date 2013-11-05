@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css函數</title>
+    <script>
+    //判斷arguments.length
+        function css(obj, name, value)
+        {
+            //alert(obj==arguments[0]);
+            if(arguments.length==2) //獲取
+            {
+                return obj.style[name];
+            }else
+            {
+                obj.style[name] = value;
+            }
+        }
+        
+        window.onload=function()
+        {
+            var oDiv = document.getElementById('div1');
+            
+            alert(css(oDiv, 'width'));
+            //css(oDiv, 'background', 'green')
+        }
+        /*
+        css(oDiv, 'width')          獲取樣式
+        css(oDiv, 'width', '200px') 設置樣式
+        */
+    </script>
+</head>
+<body>
+    <div id="div1" style="width:200px; height:200px; background:red;">
+    
+    </div>
+</body>
+</html>
