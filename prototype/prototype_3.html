@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>prototype test</title>
+    <script>
+        function Box(name, age){
+            this.name = name;
+            this.age = age;
+            this.family = ['A','B','C'];    //引用類型, 放在構造裡就不會被共享
+        }
+        //構造函數理的方法, 放在構造裡, 每次實例話都會分配一個內存地址( 浪費空間 ), 
+        //所以最好放在原型裡, 保證多次實例話只有一個地址
+        //這邊可以使用 組合繼承 ( 原型鏈 + 借用構造函數 )
+        Box.prototype.run = function(){
+            return 'this.name: ' + this.name + ', this.age: ' + this.age ;
+        };
+        //Box.prototype.family = 'Home';  //給原型添加
+        
+        function Desk(name, age){
+            Box.call(this, name, age);  //對象冒充, 對象冒充只能繼承構造函數裡的屬性
+        }
+        Desk.prototype = new Box();
+        
+        var desk = new Desk('Terry', 100);
+        alert(desk.run());
+        
+        //alert(desk.name);   //Terry
+        //alert(desk.family); //undefined
+        /*
+        alert(desk.family);     //A,B,C
+        desk.family.push('E');  //A,B,C,E
+        alert(desk.family);     //A,B,C
+        var desk2 = new Desk('Terry', 100);
+        alert(desk2.family);    //A,B,C
+        */
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

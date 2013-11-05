@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>indexOf</title>
+    <script>
+        var box = 'terry is terry';
+        /*
+        //alert( box.indexOf() );           //返回-1, 找不到
+        alert( box.indexOf('r') );          //返回 r 從初始搜尋, 第一次出現的位置, 4
+        alert( box.lastIndexOf('r') );      //返回 r 從末尾搜尋, 第一次出現的位置, 12
+        alert( box.indexOf('r', 4) );       //從第四個位置開始搜尋, r 第一次出現的位置11
+        alert( box.lastIndexOf('r', 4) );   //從第四個位置開始搜尋, r 第一次出現的位置3
+        */
+        //alert( box.indexOf(',') );
+        var arr = [];
+        while( pos > -1 ){              //如果大於-1 (表示有找到了!) ,則執行以下
+        var pos = box.indexOf('r');
+            arr.push(pos);
+            pos = box.indexOf('r', pos + 1);
+        }
+        alert(arr);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

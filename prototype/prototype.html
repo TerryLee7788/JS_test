@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>prototype test</title>
+    <script>
+    function Box(name, age){
+        this.name = name;
+        this.age = age;
+        this.family = ['Terry', 'Sinnie', 'Karen'];
+        
+        if( typeof this.data != 'function' ){
+            console.log('start');
+            Box.prototype.data = function(){
+                return 'this.name: ' + this.name + ', this.age: ' + this.age ;
+            };
+            console.log('end');
+        }
+    }
+    
+    var box1 = new Box('Lee', 100);
+    var box2 = new Box('Wei', 200);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
