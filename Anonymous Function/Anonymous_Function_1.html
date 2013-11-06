@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>匿名函數</title>
+    <script>
+    /*
+    (function(){            //(匿名函數)();
+    
+    })();
+    */
+    /*
+    var box = (function(){
+        return 'Terry';     //將返回值賦給 box
+    })();
+    alert(box);             //Terry
+    */
+    /*
+    //自我執行匿名函數的傳參
+    (function(name){
+        alert(name);
+    })('Terry');            //Terry
+    */
+    /*
+    //使用這種方式無法實現局部變量進行累加的動作, 因為每次在調用box函數的時候, age都被初始化了, 所以age 會一直為100
+    function box(){
+        var age = 100;      //每次調用函數時, age 都被初始化
+        age++;
+        return age;
+    }
+    alert(box());
+    alert(box());
+    alert(box());
+    */
+
+    //使用匿名函數實現局部變量駐留在內存中, 再來進行累加
+    function box(){
+        var age = 100;      //局部變量
+        return function(){  //閉包
+            age++;
+            return age;
+        };
+    }
+    var b = box();          //只被執行了一次
+    alert(b());             //101
+    alert(b());             //102
+    /*
+    PS:由於閉包的作用域返回的局部變量資源不會被立即銷毀回收, 所以可能會占用更多的內存
+       過度使用閉包會導致性能下降
+       建議在非常有必要的時候才使用幣包
+    */
+    b = null;               //解除引用, 等待被回收
+    alert(b());             //b is not a function.
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
