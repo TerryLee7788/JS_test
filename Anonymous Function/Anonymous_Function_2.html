@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>匿名函數</title>
+    <script>
+    /*
+    function box(){
+        var arr = [];
+        for(var i=0; i<5; i++){
+            arr[i] = function(){
+                return i;
+            };
+        }
+        
+        //循環已經執行完畢了! i最終是4++ = 5, 那麼最後就是5
+        return arr;
+    }
+    var aaa = box();
+    for(var i=0; i<5; i++){
+        alert(aaa[i]());    //最後已經是5了, 所以調用的時候就是都是5
+    }
+    */
+    /*
+    //修改 1
+    function box(){
+        var arr = [];
+        for(var i=0; i<5; i++){
+            arr[i] = (function(num){        //通過自我及時執行匿名函數
+                return num;
+            })(i);
+        }
+        
+        //循環已經執行完畢了! i最終是4++ = 5, 那麼最後就是5
+        return arr;
+    }
+    var aaa = box();
+    for(var i=0; i<5; i++){
+        alert(aaa[i]);
+    }
+    */
+    /*
+    //修改 2
+    function box(){
+        var arr = [];
+        for(var i=0; i<5; i++){
+            arr[i] = (function(num){        //通過自我及時執行匿名函數
+                //num 其實在這
+                return function(){          //閉包可以將變量暫時駐留在內存中
+                    return num;
+                };
+            })(i);
+        }
+        
+        //循環已經執行完畢了! num 為什麼還可以返回 0, 1, 2, 3, 4 ?
+        return arr;
+    }
+    var aaa = box();
+    for(var i=0; i<5; i++){
+        alert(aaa[i]());                    //加個() 執行
+    }
+    */
+    /*
+    //修改 3
+    //主要給他自我執行
+    function box(){
+        var arr = [];
+        for(var i=0; i<5; i++){
+            arr[i] = function(num){         //通過自我及時執行匿名函數
+                //num 其實在這
+                return function(){          //閉包可以將變量暫時駐留在內存中
+                    return num;
+                }
+            }(i);
+        }
+        
+        //循環已經執行完畢了! num 為什麼還可以返回 0, 1, 2, 3, 4 ?
+        return arr;
+    }
+    var aaa = box();
+    for(var i=0; i<5; i++){
+        alert(aaa[i]());                    //加個() 執行
+    }
+    */
+    
+    //this 結合閉包
+    //關於this-1
+    var name = 'Terry_1';                   //全局變量
+    var box = {
+        name : 'Terry_2',
+        getThis: function(){
+            return function(){
+                return this.name;           //閉包內的this, 指向了window, (這裡是模擬的全局)
+            };
+        }
+    };
+    alert(box.getThis()());                 //印出全局變量的name, Terry_1
+    
+    //關於this-2
+    //如果想要讓閉包裡面的this指向自己, 可以使用對象冒充的方式 call()
+    //第一種做法
+    var name = 'Terry_1';                   //全局變量
+    var box = {
+        name : 'Terry_2',
+        getThis: function(){
+            return function(){
+                return this.name;           //閉包內的this, 指向了window, (這裡是模擬的全局)
+            };
+        }
+    };
+    alert(box.getThis().call(box));         //印出box的name, Terry_2
+    
+    //關於this-2-1
+    //如果想要讓閉包裡面的this指向自己
+    //第二種做法
+    var name = 'Terry_1';                   //全局變量
+    var box = {
+        name : 'Terry_2',
+        getThis: function(){
+            //這邊的this作用域是box
+            var self = this;                //把這邊的this 給存起來, 給裡面的閉包用
+            return function(){
+                //這邊的this作用域是window
+                return self.name;
+            };
+        }
+    };
+    alert(box.getThis()());                 //印出box的name, Terry_2
+    /*
+        由於IE的JScript對象和 DOM對象使用不同的垃圾回收方式, 因此閉包在IE中會導致一些問題.
+        就是內存洩漏的問題, 也就是無法銷毀駐留在內存中的元素
+        (需要等到瀏覽器關閉的時候才釋放)
+    */
+    window.onload = function(){
+        var oT = document.getElementById('terry');
+        var text = oT.innerHTML;
+        oT.onclick = function(){
+            alert(text);
+        };
+        oT = null;                          //在IE瀏覽器, 手動的將它設置為null, 等待被回收
+    };
+    </script>
+</head>
+<body>
+    <div id="terry">Terry</div>
+</body>
+</html>
