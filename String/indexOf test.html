@@ -13,9 +13,10 @@
         alert( box.lastIndexOf('r', 4) );   //從第四個位置開始搜尋, r 第一次出現的位置3
         */
         //alert( box.indexOf(',') );
+
         var arr = [];
-        while( pos > -1 ){              //如果大於-1 (表示有找到了!) ,則執行以下
         var pos = box.indexOf('r');
+        while( pos > -1 ){              //如果大於-1 (表示有找到了!) ,則執行以下
             arr.push(pos);
             pos = box.indexOf('r', pos + 1);
         }
