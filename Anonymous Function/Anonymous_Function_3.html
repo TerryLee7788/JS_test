@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>私有作用域</title>
+    <script>
+    //使用私有作用域 (模仿)
+    function box(){
+        (function(){                        //包含自我執行的匿名函數, 就可以實現私有作用域
+            for(var i=0; i<5; i++){
+                alert(i);
+            }
+        })();                               //出了這個作用域, 變量就被銷毀, 外面用不到裡面的值
+        alert(i);                           //這裡就不認識了!
+    }
+    //box();
+    
+    //用私有作用域, 限制全局變數到處使用, 防止變量的汙染
+    (function(){
+        //這裡是私有作用域
+        var age = 100;
+        //alert(age);
+    })();
+    //alert(age);     //age is not defined
+    
+    /*
+        一般來說, 我們都應該盡量少在全局作用域中, 添加變量和函數(方法), 
+        在大型項目中, 多人開發的時候, 過多的全局變量和函數很容易導致命名衝突
+        這邊可以採用私有作用域的方法, 讓每個開發者可以使用自己的變量,
+        就不必擔心在全局裡面造成衝突
+    */
+    
+    function Box(){
+        this.age = 100;                     //屬性, 公有的
+        this.run = function(){              //方法, 公有的
+            return 'runing...';
+        };
+    }
+    var box_1 = new Box();
+    //外部可以訪問到
+    //alert(box_1.age);
+    //alert(box_1.run());
+    
+    /*
+    function Box_2(){
+        var age = 100;                      //私有變量
+        function run(){                     //私有函數
+            return 'runing...';
+        };
+        this.getAge = function(){
+            return age;
+        };
+    }
+    var box2 = new Box_2();
+    alert(box2.getAge());
+    */
+    
+    //通過構造函數傳參(get, set)方式來進行
+    //按照值來傳遞參數, 而不是引用的
+    function Box_2(value){
+        var user = value;
+        this.getUser = function(){
+            return user;
+        };
+        this.setUser = function(value){     //如何實現共享?
+            user = value;
+        };
+    }
+    var box2 = new Box_2('Terry');
+    //alert(box2.getUser());                //get 值
+    box2.setUser('Terry_2');                //set 值
+    //alert(box2.getUser());
+    
+    var box22 = new Box_2('Terry_22');
+    //alert(box2.getUser());                //印出來還是box2得值 , Terry_2
+    //必須要用
+    //alert(box22.getUser());               //Terry_22
+    //才會印出新設置的值, 這樣就會造成記憶體內存消耗過多
+    
+    
+    //需要共享, 要使用原型(靜態屬性), 大家都可以訪問到的
+    (function(){
+        var user = '';                      //私有變量
+        Box222 = function(value){           //這是全局, 構造函數 (這邊這樣寫是因為如果你把它聲明為私有函數的話, 外部無法訪問到這個東西)
+            user = value;
+        };
+        Box222.prototype.getUser = function(){
+            return user;
+        };
+        Box222.prototype.setUser = function(value){
+            user = value;
+        };
+    })();
+    var box222 = new Box222('Terry');       //第一次實例化
+    //alert(box222.getUser());                //調用了box222
+    var box333 = new Box222('Terry_222');   //第二次實例化
+    box333.setUser('TerryLee7788');
+    //alert(box222.getUser());                //調用了box222, 但實現了共享 (同一個地址了!)
+    
+    //單例就是永遠只實例化一次, 其實就是變量對象聲明方式
+    
+    function Desk(){}
+    
+    var box7788 = function(){
+        var user = 'Lee ';                  //私有變量
+        function run(){                     //私有函數
+            return 'runing...';
+        }
+        var desk = new Desk();
+        //desk.prototype
+        desk.runGo = function(){
+            return user + run();
+        };
+        /*
+        return {
+            objRun : function(){            //對外公共接口的特權方法
+                return user + run();
+            }
+        };
+        */
+        return desk;
+    }();                                    //自己運行一次
+    //console.log(box7788);
+    alert(box7788.runGo());
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
