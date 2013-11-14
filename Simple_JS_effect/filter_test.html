@@ -1,0 +1,97 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="http://meyerweb.com/eric/tools/css/reset/reset200802.css">
+    <style>
+    .wrapper{ position:relative; width:340px; height:900px; background:#f0f0f0; margin:0 auto; }
+    .filter{ width:96%; position:relative; top:100px; padding:8px 0; margin:0 auto; color:#fff; left:50%; top:7%; margin-left:-48%; background:#424242; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; }
+    .filter p{ font-weight:bold; font-size:15px; line-height:15px; padding-bottom:8px; }
+    .filter-content{ background:#424242; color:#dbdbdb; }
+    .filter-content li{ font-size:16px; line-height:16px; border:1px solid black; background:#424242; padding:10px 8px 10px 30px; border-bottom:none; cursor:pointer; }
+    .filter-content li:hover{ background:#333; }
+    .filter-content li span:first-child{ position:absolute; left:16px; }
+    .filter-content li:first-child{ 
+                border-top-left-radius:5px;         border-top-right-radius:5px; 
+           -moz-border-top-left-radius:5px;    -moz-border-top-right-radius:5px; 
+        -webkit-border-top-left-radius:5px; -webkit-border-top-right-radius:5px; 
+    }
+    .filter-content li:last-child{ border-bottom:1px solid black;
+                border-bottom-left-radius:5px;         border-bottom-right-radius:5px; 
+           -moz-border-bottom-left-radius:5px;    -moz-border-bottom-right-radius:5px; 
+        -webkit-border-bottom-left-radius:5px; -webkit-border-bottom-right-radius:5px;
+    }
+    .img-content{ width:100%; height:400px; background:red; position:relative; }
+    .header{ width:100%; height:47px; }
+    
+    .filter-center{ width:96%; margin-left:2%; }
+    .hide{ display:none; }
+    .mask{ width:100%; height:95%; position:absolute; bottom:0; background:rgba(0,0,0,0.8); }
+    .mask p{ color:#c2c2c2; }
+    .mask-text{ position:absolute; left:50%; top:50%; margin:-16px 0 0 -83px; }
+    .filter-content .active{ background:black; }
+    .filter-content li span:first-child{ display:none; }
+    .filter-content li.active span:first-child{ display:block; }
+    .filter-content li.active:hover{ background:black; }
+    </style>
+    <script>
+        window.onload = function(){
+            var mask   = document.getElementsByClassName('mask')[0];
+            var filter = document.getElementsByClassName('filter')[0];
+            var filter_li = filter.getElementsByTagName('li');
+            var cur_display = '';
+            var i, l, j, k;
+            filter_li[0].className = 'active';
+            mask.onclick = function(){
+                cur_display = getTargetStyle(filter, 'display');
+                if(cur_display == 'block'){
+                    filter.style.display = 'none';
+                }else{
+                    filter.style.display = 'block';
+                }
+            };
+            i = 0; l = filter_li.length;
+            for(i; i < l; i++) {
+                filter_li[i].index = i;
+                filter_li[i].onclick = function(){
+                    filter.style.display = 'none';
+                    j=0; k=filter_li.length;
+                    for(j; j<k; j++){
+                        filter_li[j].className = '';
+                    }
+                    filter_li[this.index].className = 'active';
+                };
+            }
+        };
+        /*https://developer.mozilla.org/en-US/docs/Web/API/window.getComputedStyle?redirectlocale=en-US&redirectslug=DOM%2Fwindow.getComputedStyle*/
+        function getTargetStyle(target, style){
+            var cur = window.getComputedStyle(target, null).getPropertyValue(style);
+            return cur;
+        }
+    </script>    
+</head>
+<body>
+<div class="wrapper">
+    <div class="header">這裡是header</div>
+    <div class="img-content">
+        這裡是圖片
+        <div class="mask">
+            <div class="mask-text">
+                <p>Explicit photo hidden</p>
+                <p>Tap to change view settings</p>
+            </div>
+        </div>
+        <div class="filter hide">
+            <p class="filter-center">View Settings</p>
+            <ul class="filter-content filter-center">
+                <li><span>&#10004;</span><span>Nice</span></li>
+                <li><span>&#10004;</span><span>Naughty</span></li>
+                <li><span>&#10004;</span><span>Nasty</span></li>
+                <li><span>&#10004;</span><span>Unblock this photo only</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
