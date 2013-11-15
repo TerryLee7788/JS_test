@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="new_ajax.js"></script>
+    <script>
+    //在js裡, 呼叫一個沒有定義的變量 --> 報錯
+    //而呼叫一個沒有定義的屬性 --> undefined
+    window.onload = function(){
+        var oBtn = document.getElementById('btn1');
+        oBtn.onclick = function(){
+            ajax('aa.txt', function(str){
+                alert(str);
+            });
+        };
+    };
+    </script>
+</head>
+<body>
+    <input id="btn1" type="button" value="讀取">
+</body>
+</html>
