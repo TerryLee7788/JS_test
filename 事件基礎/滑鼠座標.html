@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>滑鼠座標</title>
+    <style>
+    #div1{ width:200px; height:200px; background:red; position:absolute; }
+    body{ height:2000px; }
+    </style>
+    <script>
+        document.onmousemove = function(ev){
+            var oEvent = ev || event;
+            var oDiv = document.getElementById('div1');
+            
+            //抖動問題還需解決!
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            
+            oDiv.style.left = oEvent.clientX + 'px';
+            oDiv.style.top = oEvent.clientY + scrollTop + 'px';
+            
+            /*
+                notes: 
+                    clientX or clientY 就是 可視區範圍
+                    使用clientY的時候~一定要加上scrollTop, 不然肯定會出問題    
+            */
+        };
+    </script>
+</head>
+<body>
+    <div id="div1">
+    
+    </div>
+</body>
+</html>

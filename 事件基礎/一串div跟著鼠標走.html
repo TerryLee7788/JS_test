@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>一串div跟著鼠標走</title>
+    <style>
+    div{ width:10px; height:10px; background:red; position:absolute; }
+    </style>
+    <script>
+        function getPos(ev){
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+            return {x: ev.clientX + scrollLeft, y: ev.clientY + scrollTop };
+        }
+        document.onmousemove = function(ev){
+            var oEvent = ev || event;
+            var aDiv = document.getElementsByTagName('div');
+            var pos = getPos(oEvent);
+            var i;
+            
+            //倒著跑
+            i = aDiv.length - 1;
+            for(i; i>0; i--){
+                //div跟著前一個div走
+                aDiv[i].style.left = aDiv[i-1].offsetLeft + 'px';
+                aDiv[i].style.top = aDiv[i-1].offsetTop + 'px';
+            }
+            //第一個div 跟著鼠標走
+            aDiv[0].style.left = pos.x + 'px';
+            aDiv[0].style.top = pos.y + 'px';
+        };
+    </script>
+</head>
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</body>
+</html>

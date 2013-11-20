@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>event</title>
+    <script>
+    window.onload = function(){
+        document.onclick = function(e){
+            //IE
+            //alert(event.clientX + ', ' + event.clientY);
+            
+            //FF
+            //alert(e.clientX + ', ' + e.clientY);
+            
+            //兼容性問題
+            var cur_event = e || event;
+            alert(cur_event.clientX + ', ' + cur_event.clientY);
+        };
+    };
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

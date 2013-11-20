@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>仿select下拉框</title>
+    <style>
+    #div1{ width:600px; height:400px; background:#888; display:none; padding:10px; }
+    #div1 span{ padding:10px; border:1px solid black; display:inline-block; width:100px; text-align:center; color:blue; cursor:pointer; }
+    </style>
+    <script>
+        window.onload = function(){
+            var oBtn = document.getElementById('btn1');
+            var oDiv = document.getElementById('div1');
+            var oSpan = oDiv.getElementsByTagName('span');
+            var oTxt = document.getElementById('txt1');
+            var i, l;
+            oBtn.onclick = function(ev){
+                var oEvent = ev || event;
+                oDiv.style.display = 'block';
+                //alert(1);
+                
+                //取消事件冒泡
+                oEvent.cancelBubble = true;
+            };
+            
+            document.onclick = function(){
+                oDiv.style.display = 'none';
+                //alert(2);
+            };
+            
+            i = 0; l = oSpan.length;
+            for(i; i<l; i++){
+                oSpan[i].onclick = function(){
+                    oTxt.value = this.innerHTML;
+                };
+            }
+        };
+    </script>
+</head>
+<body>
+    <input type="text" value="default" id="txt1">
+    <input type="button" id="btn1" value="click">
+    <div id="div1">
+        <span>Terry1</span>
+        <span>Terry2</span>
+        <span>Terry3</span>
+    </div>
+</body>
+</html>

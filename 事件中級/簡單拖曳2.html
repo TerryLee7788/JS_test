@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>簡單拖曳</title>
+    <style>
+    #div1{ width:200px; height:200px; background:red; position:absolute; }
+    </style>
+    <script>
+    window.onload = function(){
+        var oDiv = document.getElementById('div1');
+        var disX = 0;
+        var disY = 0;
+        oDiv.onmousedown = function(e){
+            var oEvent = e || event;
+            disX = oEvent.clientX - oDiv.offsetLeft;
+            disY = oEvent.clientY - oDiv.offsetTop;
+            document.onmousemove = function(ev){
+                var oEvent = ev || event;
+                oDiv.style.left = oEvent.clientX - disX + 'px';
+                oDiv.style.top = oEvent.clientY -disY + 'px';
+            };
+            document.onmouseup = function(){
+                document.onmousemove = null;
+                document.onmouseup = null;
+            };
+            return false;   //阻止默認事件, 解決FF bug
+        };
+    };
+    </script>
+</head>
+<body>
+    <div id="div1"></div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件冒泡</title>
+    <style>
+    div{ padding:100px; }
+    </style>
+    <script>
+    
+    </script>
+</head>
+<body>
+    <div style="background:#888" onclick="alert(this.style.background);">
+        <div style="background:green" onclick="alert(this.style.background);">
+            <div style="background:red" onclick="alert(this.style.background);">
+            
+            </div>
+        </div>
+    </div>
+</body>
+</html>
