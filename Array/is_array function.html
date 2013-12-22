@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>check array function</title>
+    <script>
+    var is_array = function(value){
+        return value &&
+            typeof value === 'object' &&
+            typeof value.length === 'number' &&
+            typeof value.splice === 'function' &&
+            !(value.propertyIsEnumerable('length'));
+    };
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
