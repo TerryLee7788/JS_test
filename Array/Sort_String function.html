@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>sort string</title>
+    <script>
+    var m = ['aa', 'bb', 'a', 4, 8, 15, 16, 23, 42];
+    m.sort(function (a, b) {
+        if (a === b) {
+            return 0;
+        }
+        if (typeof a === typeof b) {
+            return a < b ? -1 : 1;
+        }
+        return typeof a < typeof b ? -1 : 1;
+    });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

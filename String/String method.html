@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>String method</title>
+    <script>
+    var name = 'TerryTerryTerry';
+    var name_pos = name.charAt(0);  //T
+    /*
+    charAt()
+    String.method('charAt', function (pos) {
+        return this.slice(pos, pos + 1);
+    });
+    */
+    
+    var initial = name.charCodeAt(0);   //84
+    console.log(initial);
+    
+    var name2 = 'T';
+    var new_name = name2.concat('e','r','r','y');
+    console.log(new_name);
+    
+    //var check_name = name.indexOf('e');
+    //var check_name = name.indexOf('e',2);
+    var check_name = name.indexOf('a');
+    console.log(check_name);
+    
+    var check_lase_name = name.lastIndexOf('e');
+    console.log(check_lase_name);
+    
+    //This is similar to the convention for the array.sort comparison function
+    var m = ['AAA', 'A', 'aa', 'a', 'Aa', 'aaa'];
+    m.sort(function (a, b) {
+        return a.localeCompare(b);
+    });
+    console.log(m);
+    
+    var reg = /[a-z]/g;
+    var match_name = name.match(reg);
+    console.log(match_name);
+    
+    var replace_name = name.replace(reg, 123);
+    console.log(replace_name);
+    /*
+    String.method('entityify', function ( ) {
+        var character = {
+            '<' : '&lt;',
+            '>' : '&gt;',
+            '&' : '&amp;',
+            '"' : '&quot;'
+        };
+        return function ( ) {
+            return this.replace(/[<>&"]/g, function (c) {
+                return character[c];
+            });
+        };
+    }());
+    */
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
