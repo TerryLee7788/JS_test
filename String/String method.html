@@ -16,6 +16,7 @@
     var initial = name.charCodeAt(0);   //84
     console.log(initial);
     
+    //concat method
     var name2 = 'T';
     var new_name = name2.concat('e','r','r','y');
     console.log(new_name);
@@ -35,14 +36,17 @@
     });
     console.log(m);
     
+    //match method
     var reg = /[a-z]/g;
     var match_name = name.match(reg);
     console.log(match_name);
     
+    //replace method
     var replace_name = name.replace(reg, 123);
     console.log(replace_name);
-    /*
-    String.method('entityify', function ( ) {
+    
+    //entityify method
+    String.prototype.entityify = function () {
         var character = {
             '<' : '&lt;',
             '>' : '&gt;',
@@ -54,7 +58,51 @@
                 return character[c];
             });
         };
-    }());
+    }();
+    
+    var test_str = "<&>";
+    
+    console.log(test_str.entityify());
+    
+    //search
+    var text = 'and in it he says "Any damn fool could';
+    var pos = text.search(/["']/);
+    console.log(pos);
+    
+    //slice
+    var a = text.slice(0, 3);
+    console.log(a);     //and
+    
+    var num = '0123456789';
+    var num_a = num.split('', 5);
+    console.log(num_a); //["0", "1", "2", "3", "4"] 
+    
+    var ip = '192.168.100.1';
+    var ip_a = ip.split('.');
+    console.log(ip_a);  //["192", "168", "100", "1"] 
+    
+    var c = '|a|b|c|'.split('|');
+    console.log(c);     //["", "a", "b", "c", ""] 
+    
+    var text_d = 'last,  first  ,middle';
+    var d = text_d.split(/\s*,\s*/);
+    console.log(d);     //["last", "first", "middle"] 
+    
+    var e = text_d.split(/\s*(,)\s*/);
+    console.log(e);     //["last", ",", "first", ",", "middle"] 
+    
+    var f = '|a|b|c|'.split(/\|/);
+    console.log(f);     //["", "a", "b", "c", ""] 
+    
+    /*
+    other methods
+        substring(start, end)
+        toLocaleLowerCase()
+        toLocaleUpperCase()
+        toLowerCase()
+        toUpperCase()
+        fromCharCode(char…)     ex: var a = String.fromCharCode(67, 97, 116); 
+                                    console.log(a); //Cat
     */
     </script>
 </head>
