@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test options</title>
+    <style>
+        .error-msg{
+            color: red;
+        }
+        .hide{
+            display:none;
+        }
+        div{
+            margin:10px 0;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var form = document.getElementById('form1'),
+                error_warp = document.querySelectorAll('.error-msg'),
+                reg2 = document.getElementById('reg2'),
+                selects = reg2.querySelectorAll('select'), i, arr = [];
+
+            i = 0;
+            for( i; i< selects.length; i++ ){
+                arr.push( selects[i].name );
+            }
+            console.log(arr);   // 動態取得 select 的 name
+
+            for( var j = 0; j < arr.length; j++ ){
+                reg2.querySelectorAll('[name="'+ arr[j] +'"]')[0].index = j;
+                reg2.querySelectorAll('[name="'+ arr[j] +'"]')[0].addEventListener( 'change', function(e){
+                    if( this.value === '0' ){
+                        error_warp[this.index].style.display = 'block';
+                        form.elements['submit'].disabled = true;
+                    }else{
+                        error_warp[this.index].style.display = 'none';
+                        form.elements['submit'].disabled = false;
+                    }
+                }, false );
+            }
+
+            form.addEventListener( 'submit', function(e){
+                for( var j = 0; j < arr.length; j++ ){
+                    if( reg2.querySelectorAll('[name="'+ arr[j] +'"]')[0].value === '0' ){
+                        error_warp[j].style.display = 'block';
+                        if( e.preventDefault ){
+                            e.preventDefault();
+                        }else{
+                            e.returnValue = false;  // for IE
+                        }
+                        form.elements['submit'].disabled = true;
+                    }else{
+                        error_warp[j].style.display = 'none';
+                    }
+                }
+            }, false );
+        };
+    </script>
+</head>
+<body>
+    <form name="form1" id="form1" method="get">
+        <div id="reg2" class="mod_box">
+            <div>
+                <b><div class="error-msg hide">Choose Another Please.</div></b>
+                <select name="race">
+                   <option value="0">Prefer Not To Say</option>
+                   <option value="1">Hello</option>
+                </select>
+            </div>
+            <div>
+                <b><div class="error-msg hide">Choose Another Please.</div></b>
+                <select name="body_type">
+                   <option value="0">Prefer Not To Say</option>
+                   <option value="1">Hello</option>
+                </select>
+            </div>
+            <div>
+                <b><div class="error-msg hide">Choose Another Please.</div></b>
+                <select name="race2">
+                   <option value="0">Prefer Not To Say</option>
+                   <option value="1">Hello</option>
+                </select>
+            </div>
+        </div>
+        <input name="submit" type="submit" value="Send">
+    </form> 
+</body>
+</html>
