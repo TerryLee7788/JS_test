@@ -26,7 +26,6 @@
                 if(attr === 'opacity'){
                     obj.style.filter = 'alpha(opacity:' + (cur + speed) + ')';
                     obj.style.opacity = (cur + speed)/100 ;
-                    //document.getElementById('txt1').value = obj.style.opacity;
                 }else{
                     obj.style[attr] = cur + speed + 'px';
                 }
