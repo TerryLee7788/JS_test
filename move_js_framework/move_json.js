@@ -23,19 +23,18 @@
                 if(cur != json[attr]){
                     bStop = false;
                 }
+                if(attr === 'opacity'){
+                    obj.style.filter = 'alpha(opacity:' + (cur + speed) + ')';
+                    obj.style.opacity = (cur + speed)/100 ;
+                    //document.getElementById('txt1').value = obj.style.opacity;
+                }else{
+                    obj.style[attr] = cur + speed + 'px';
+                }
                 if( bStop ){
                     clearInterval(obj.timer);
                     
                     if(fnEnd){  //防止出錯
                         fnEnd();
-                    }
-                }else{
-                    if(attr === 'opacity'){
-                        obj.style.filter = 'alpha(opacity:' + (cur + speed) + ')';
-                        obj.style.opacity = (cur + speed)/100 ;
-                        //document.getElementById('txt1').value = obj.style.opacity;
-                    }else{
-                        obj.style[attr] = cur + speed + 'px';
                     }
                 }
             }
