@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery關於DOM操作</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script>
+        //1. 操作任何元素前先將其從文檔卸載，完了再貼回去
+        var $myList = $("#list-container > ul").detach();
+        //...一大堆對$myList的處理
+        $myList.appendTo("#list-container");
+        
+        //2. 代碼裡將HTML組織好後再一次性貼回DOM裡面。
+        // bad
+        var $myList = $("#list");
+        for(var i = 0; i < 10000; i++){
+            $myList.append("<li>"+i+"</li>");
+        }
+        // good
+        var $myList = $("#list");
+        var list = "";
+        for(var i = 0; i < 10000; i++){
+            list += "<li>"+i+"</li>";
+        }
+        $myList.html(list);
+         
+        // pretty good
+        var array = []; 
+        for(var i = 0; i < 10000; i++){
+            array[i] = "<li>"+i+"</li>"; 
+        }
+        $myList.html(array.join(''));
+        
+        //3. 不要處理不存在的元素。
+        // pretty bad!!!
+        $("#nosuchthing").slideUp();
+        // you should do this
+        var $mySelection = $("#nosuchthing");
+        if ($mySelection.length) {
+            $mySelection.slideUp();
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

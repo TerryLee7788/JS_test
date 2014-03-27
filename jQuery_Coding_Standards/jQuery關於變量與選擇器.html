@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery關於變量與選擇器</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script>
+        //關於變量
+        var $products = $('div.products');  //slow
+        var $products = $('.products');     //fast
+        
+        //關於選擇器
+        $("div.data .gonzalez");            //bad
+        $(".data td.gonzalez");             //good
+        
+        $(".data table.attendees td.gonzalez"); //bad
+        $(".data td.gonzalez");                 //good
+        
+        $('.class');                        //bad
+        $('.class', '#class-container');    //good
+
+        $('div.container > *');             //bad
+        $('div.container').children()       //good
+        
+        $('div.someclass :radio');          //bad
+        $('div.someclass input:radio');     //good
+        
+        $('#outer #inner');                 //bad
+        $('div#inner');                     //bad
+        $('.outer-container #inner');       //bad
+        $('#inner');                        //good, (In jQuery, only need to invoke "document.getElementById()")
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

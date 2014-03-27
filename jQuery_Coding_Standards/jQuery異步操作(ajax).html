@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery異步操作(ajax)</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script>
+    //url裡面嵌參數，請使用專門的參數設置來傳遞
+    // bad
+    $.ajax({
+        url: "something.php?param1=test1&param2=test2",
+        ....
+    });
+     
+    // good
+    $.ajax({
+        url: "something.php",
+        data: { param1: test1, param2: test2 }
+    });
+    
+    //對於異步動態加載的內容，最好使用代理來綁定事件處理程序。這樣的好處是對於之後動態加載的元素事件同樣有效
+    $("#parent-container").on("click", "a", delegatedClickHandlerForAjax);  // good
+    
+    //使用Promise模式
+    $.ajax({ ... }).then(successHandler, failureHandler);
+     
+    // or
+    var jqxhr = $.ajax({ ... });
+    jqxhr.done(successHandler);
+    jqxhr.fail(failureHandler);
+    
+    //標準的Ajax模板
+    var jqxhr = $.ajax({
+        url: url,
+        type: "GET",        // 默認為GET,你可以根據需要更改
+        cache: true,        // 默認為true,但對於script,jsonp類型為false,可以自行設置
+        data: {},           // 將請求參數放這裡.
+        dataType: "json",   // 指定想要的數據類型
+        jsonp: "callback",  // 指定回調處理JSONP類型的請求
+        statusCode: {       // 如果你想處理各狀態的錯誤的話
+            404: handler404,
+            500: handler500
+        }
+    });
+    jqxhr.done(successHandler);
+    jqxhr.fail(failureHandler);
+    
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

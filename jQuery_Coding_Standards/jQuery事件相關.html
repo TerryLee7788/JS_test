@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery事件相關</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script>
+    // 匿名函數不易維護
+    // 不是很好維護
+    $("#myLink").on("click", function(){...}); // 表这样
+     
+    // 應該要這樣
+    function myLinkClickHandler(){...}
+    $("#myLink").on("click", myLinkClickHandler);
+    
+    // 處理文檔ready事件的回調也表用匿名函數，匿名函數不易調試維護測試和復用
+    $(function(){ ... }); // 糟糕的做法
+     
+    // 好的做法
+    $(initPage); // $(document).ready(initPage);
+    function initPage(){
+        // 這裡你可以進行程序的初始化了
+    }
+    
+    // 進一步，最好也將ready事件的處理程序放到外部文件中引入到頁面，而頁面中內嵌的代碼只需調用即可。
+    
+    /* example:
+        <script src="my-document-ready.js"></script>
+        <script>
+            // 始化一些必要的全局變量
+            $(document).ready(initPage); // $(initPage);
+        </script>
+    */
+    
+    /* don't do this way...
+        <a id="myLink" href="#" onclick="myEventHandler();">my link</a>
+    */
+    $("#myLink").on("click", myEventHandler); // good
+    
+    //如果可能盡量在綁定事件處理程序時使用一個命名空間，這樣可以方便地取消綁定而不會影響其他綁定。
+    
+    $("#myLink").on("click.mySpecialClick", myEventHandler); // 不錯
+    // 之後，讓我們優雅地解除綁定
+    $("#myLink").unbind("click.mySpecialClick");
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

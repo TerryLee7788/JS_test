@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery其他</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script>
+    //1. 使用對像字面量來傳遞參數
+    $myLink.attr("href", "#").attr("title", "my link").attr("rel", "external"); // bad, 使用了attr 3次
+    
+    $myLink.attr({  // good! 只用了1次 attr
+        href: "#",
+        title: "my link",
+        rel: "external"
+    }); 
+    
+    //2. 將CSS與jQuery交互使用
+    $("#mydiv").css({'color':red, 'font-weight':'bold'});   // bad
+    /*
+        in css...
+        .error { color: red; font-weight: bold; }
+    */
+    $("#mydiv").addClass("error");                          // good
+    
+    // 3.時刻關注官方Changelog，查看廢棄的方法
+    
+    // 4.適時地使用原生JavaScript。
+    $("#myId"); /* <-多少還是會遜色於... */ document.getElementById("myId");
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
