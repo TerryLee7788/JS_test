@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>extend</title>
+    <script>
+    function extend(target, source){
+      if(source){
+        for(var key in source){
+          var val = source[key];
+          if(val !== 'undefined'){
+            target[key] = val;
+          }
+        }
+      }
+      return target;
+    }
+    function Alert(opts){
+      opts = extend({width: 320, height:480}, opts);
+      this.width = opts.width;
+      this.height = opts.height;
+      extend(this, opts);
+    }
+    
+    var obj1 = new Alert(); // { width: 320, height: 480 }
+    var obj2 = new Alert({width:100, height:150});  // { width: 100, height: 150 }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
