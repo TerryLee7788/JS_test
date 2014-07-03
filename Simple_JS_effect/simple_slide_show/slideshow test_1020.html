@@ -1,0 +1,201 @@
+﻿<!doctype html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>slideshow test</title>
+<script src="js/move.js"></script>
+<link rel="stylesheet" href="http://meyerweb.com/eric/tools/css/reset/reset200802.css">
+<script>
+function getByClass(oParent, sClass){
+    var aEle = oParent.getElementsByTagName('*'); //選取所有元素
+    var aResult = [];
+    for(var i=0; i<aEle.length; i++){
+        if(aEle[i].className === sClass){
+            aResult.push(aEle[i]);
+        }
+    }
+    return aResult;
+}
+window.onload = function(){
+    var i, l ;
+    
+    var slide_content = document.getElementById('content');
+    var mask          = getByClass( slide_content, 'mask')[0];
+    var prev          = getByClass( slide_content, 'previous')[0];
+    var next          = getByClass( slide_content, 'next')[0];
+    
+    var mask_left     = getByClass( slide_content, 'mask_left' )[0];
+    var mask_right    = getByClass( slide_content, 'mask_right' )[0];
+    
+    var down_slide_content = getByClass(slide_content, 'down_slide_content')[0];
+    var down_slide_content_ul = down_slide_content.getElementsByTagName('ul')[0];
+    var down_slide_content_li = down_slide_content.getElementsByTagName('li');
+    var image_content_ul = getByClass(slide_content, 'image_content')[0];
+    var image_content_li = image_content_ul.getElementsByTagName('li');
+    
+    var now_z_index = 2;
+    var now = 0;
+    var img_arr = ['http://www.erincreate.com/wp-content/uploads/2013/01/IMG_3240.jpg', 'http://www.erincreate.com/wp-content/uploads/2013/01/IMG_32071.jpg', 'http://www.erincreate.com/wp-content/uploads/2012/07/IMG_28961.jpg', 'http://www.erincreate.com/wp-content/uploads/2012/07/IMG_2664_2.jpg', 'http://www.erincreate.com/wp-content/uploads/2012/07/IMG_2548.jpg'];
+    var img_tag = new Image();
+    
+    for(var j = 0; j < img_arr.length; j++){
+        img_tag.src = img_arr[j];
+    }
+    
+    //下方 content
+    down_slide_content.onmouseover = mask.onmouseover = function(){
+        startMove(down_slide_content, 'bottom', 0);
+    };
+    down_slide_content.onmouseout = mask.onmouseout = function(){
+        startMove(down_slide_content, 'bottom', -150);
+    };
+    //左右按鈕
+    prev.onmouseover = mask_left.onmouseover = function(){
+        startMove(prev, 'opacity', 100);
+        startMove(mask_left, 'opacity', 60);
+    };
+    prev.onmouseout = mask_left.onmouseout = function(){
+        startMove(prev, 'opacity', 0);
+        startMove(mask_left, 'opacity', 0);
+    };
+    next.onmouseover = mask_right.onmouseover = function(){
+        startMove(next, 'opacity', 100);
+        startMove(mask_right, 'opacity', 60);
+    };
+    next.onmouseout = mask_right.onmouseout = function(){
+        startMove(next, 'opacity', 0);
+        startMove(mask_right, 'opacity', 0);
+    };
+    //大圖切換
+    i=0; l = down_slide_content_li.length;
+    for(i; i<l; i++){
+        down_slide_content_li[i].index = i;
+        down_slide_content_li[i].onclick = function(){
+            
+            if(this.index === now) return;
+            now = this.index;
+            
+            tab();
+        };
+
+        down_slide_content_li[i].onmouseover = function(){
+            startMove(this, 'opacity', 100);
+        };
+        down_slide_content_li[i].onmouseout = function(){
+            if(this.index != now){
+                startMove(this, 'opacity', 60);
+            }
+        };
+    }
+    
+    function tab(){
+        var cur_height = slide_content.clientHeight;
+        image_content_li[now].style.zIndex = now_z_index++;
+        //image_content_li[now].style.height = 0;
+        image_content_li[now].style.opacity = 0;
+        
+        i = 0; l = down_slide_content_li.length;
+        for(i; i<l; i++){
+            startMove(down_slide_content_li[i], 'opacity', 60);
+            //console.log(down_slide_content_li[i]);
+        }
+        startMove(down_slide_content_li[now], 'opacity', 100);
+        
+        //startMove(image_content_li[now], 'height', cur_height);
+        startMove(image_content_li[now], 'opacity', 100);
+        //startMove(down_slide_content_ul, 'left', -(now-1)*down_slide_content_li[0].offsetWidth );
+    }
+    
+    mask_left.onclick = prev.onclick = function(){
+        now--;
+        if(now === -1){
+            now = down_slide_content_li.length-1;
+        }
+        tab();
+    };
+    mask_right.onclick = next.onclick = function(){
+        now++;
+        //console.log(l);
+        l = down_slide_content_li.length;
+        if(now === l){
+            now = 0;
+        }
+        tab();
+    };
+
+    var timer = setInterval(mask_right.onclick, 4000);
+    
+    slide_content.onmouseover = function(){
+        clearInterval(timer);
+    };
+    slide_content.onmouseout = function(){
+        timer = setInterval(mask_right.onclick, 4000);
+    };
+
+};
+</script>
+<style>
+#content{ width:905px; height:600px; margin:0 auto; position:relative; overflow:hidden; font-size:30px; font-weight:bold; background-repeat:no-repeat !important; background-size:100% !important; }
+.mask{ width:100%; height:150px; position:absolute; bottom:0; z-index:9999; background: red; }
+.mask{ opacity:0; filter:alpha(opacity:0); }
+.mask_left{ left:0; z-index:10; }
+.mask_right{ right:0; z-index:10; }
+.mask_left, .mask_right{ width:7%;height:100%; background:black; position:absolute; opacity:0; filter:alpha(opacity:0); z-index:9999; cursor:pointer; }
+#slideshow{ position:absolute; width:100%; bottom:-150px; height:150px; background:black; margin:0 auto; opacity:0.8; z-index:9999; }
+#slideshow_content>li:first-child{ margin-left:28px; }
+#slideshow_content>li:last-child { margin-right:28px; }
+#slideshow_content>li{ width:140px; height:95px; display:inline-block; margin:28px 14px; cursor:pointer; opacity:0.4; filter:alpha(opacity:40); }
+.image_content li{ position:absolute; width:100%; height:100%; }
+.previous, .next, .pause, .play{ position:absolute; top:50%; width:43px; height:43px; margin-top:-21px; z-index:9999; cursor:pointer; opacity:0; filter:alpha(opacity:0); }
+.previous{ left:10px; background:url("http://www.erincreate.com/wp-content/themes/teardrop/i/slideshow/back.png"); }
+.next{ right:10px; background:url("http://www.erincreate.com/wp-content/themes/teardrop/i/slideshow/forward.png"); }
+.active{ opacity:1 !important; }
+.dots{ position:absolute; top:0; right:0; width:100%; text-align:right; padding:10px 10px 0 0; z-index:20; }
+.dots>ul>li{ width:20px; height:20px; border-radius:50%; display:inline-block; margin:0 1px; background-color:#d9d9d9; box-shadow:inset 1px 1px 1px #b0b0b0; cursor:pointer; }
+.dots_active{ box-shadow:inset 1px 1px 1px #419AFA; 
+    background: rgb(125,185,232); /* Old browsers */
+    background: -webkit-linear-gradient(top,  rgba(125,185,232,1) 0%,rgba(41,137,216,1) 57%,rgba(32,124,202,1) 77%,rgba(30,87,153,1) 100%); /* Chrome10+,Safari5.1+ */
+    background:    -moz-linear-gradient(top,  rgba(125,185,232,1) 0%, rgba(41,137,216,1) 57%, rgba(32,124,202,1) 77%, rgba(30,87,153,1) 100%); /* FF3.6+ */
+    background:     -ms-linear-gradient(top,  rgba(125,185,232,1) 0%,rgba(41,137,216,1) 57%,rgba(32,124,202,1) 77%,rgba(30,87,153,1) 100%); /* IE10+ */ 
+    background:      -o-linear-gradient(top,  rgba(125,185,232,1) 0%,rgba(41,137,216,1) 57%,rgba(32,124,202,1) 77%,rgba(30,87,153,1) 100%); /* Opera 11.10+ */
+    background:        -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,185,232,1)), color-stop(57%,rgba(41,137,216,1)), color-stop(77%,rgba(32,124,202,1)), color-stop(100%,rgba(30,87,153,1))); /* Chrome,Safari4+ */
+    background:         linear-gradient(to bottom,  rgba(125,185,232,1) 0%,rgba(41,137,216,1) 57%,rgba(32,124,202,1) 77%,rgba(30,87,153,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7db9e8', endColorstr='#1e5799',GradientType=0 ); /* IE6-9 */
+}
+</style>
+</head>
+<body>
+<div id="content" class="slide_content">
+    <div class="mask"></div>
+    <div class="mask_left"></div>
+    <div class="mask_right"></div>
+    <ul class="image_content">
+        <li style="z-index:1;"><img height="100%" width="100%" src="http://www.erincreate.com/wp-content/uploads/2013/01/IMG_3240.jpg" alt=""></li>
+        <li><img height="100%" width="100%" src="http://www.erincreate.com/wp-content/uploads/2013/01/IMG_32071.jpg" alt=""></li>
+        <li><img height="100%" width="100%" src="http://www.erincreate.com/wp-content/uploads/2012/07/IMG_28961.jpg" alt=""></li>
+        <li><img height="100%" width="100%" src="http://www.erincreate.com/wp-content/uploads/2012/07/IMG_2664_2.jpg" alt=""></li>
+        <li><img height="100%" width="100%" src="http://www.erincreate.com/wp-content/uploads/2012/07/IMG_2548.jpg" alt=""></li>
+    </ul>
+    <a class="previous" class="image_button image_botton2"></a>
+    <a class="next" class="image_button image_botton2"></a>
+    <!--div class="dots">
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div-->
+    <div id="slideshow" class="down_slide_content">
+        <ul id="slideshow_content">
+            <li style="opacity: 1;"><img src="http://www.erincreate.com/wp-content/uploads/2013/01/IMG_3240-140x95.jpg" alt="pic1"></li>
+            <li><img src="http://www.erincreate.com/wp-content/uploads/2013/01/IMG_32071-140x95.jpg" alt="pic2"></li>
+            <li><img src="http://www.erincreate.com/wp-content/uploads/2012/07/IMG_28961-140x95.jpg" alt="pic3"></li>
+            <li><img src="http://www.erincreate.com/wp-content/uploads/2012/07/IMG_2664_2-140x95.jpg" alt="pic4"></li>
+            <li><img src="http://www.erincreate.com/wp-content/uploads/2012/07/IMG_2548-140x95.jpg" alt="pic5"></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
